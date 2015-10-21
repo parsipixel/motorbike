@@ -28,7 +28,7 @@ class MotorBikesController extends Controller
 
         $motorbikes = Motorbike::with('image')->where('color', $operator, $filter)->orderBy($order)->paginate(5);
 
-        $colors = DB::table('motorbikes')->lists('color');
+        $colors = array_unique(DB::table('motorbikes')->lists('color'));
 
         return view('home', compact('motorbikes', 'colors'));
     }

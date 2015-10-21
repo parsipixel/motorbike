@@ -3,27 +3,29 @@
 @section('content')
     <h1>Welcome to Motorbikes</h1>
 
-    <div class="well well-sm">
-        <form action="{{ route('home') }}" method="GET" class="pull-right form-inline" style="margin-bottom: 0;">
-            {{-- SORT BY PRICE OR DATE --}}
-            <select class="form-control " name="order" id="order">
-                <option value="">Sort by</option>
-                <option {{ Input::get('order') == 'price' ? 'selected' : '' }} value="price">Price</option>
-                <option {{ Input::get('order') == 'created_at' ? 'selected' : '' }} value="created_at">Date</option>
-            </select>
+    @if(count($motorbikes) > 0)
+        <div class="well well-sm">
+            <form action="{{ route('home') }}" method="GET" class="pull-right form-inline" style="margin-bottom: 0;">
+                {{-- SORT BY PRICE OR DATE --}}
+                <select class="form-control " name="order" id="order">
+                    <option value="">Sort by</option>
+                    <option {{ Input::get('order') == 'price' ? 'selected' : '' }} value="price">Price</option>
+                    <option {{ Input::get('order') == 'created_at' ? 'selected' : '' }} value="created_at">Date</option>
+                </select>
 
-            {{-- FILTER BY COLOR --}}
-            <select class="form-control" name="color" id="color">
-                <option value="">Filter by color</option>
-                @foreach($colors as $color)
-                    <option {{ Input::get('color') == $color ? 'selected' : '' }} value="{{ $color }}">{{ $color }}</option>
-                @endforeach
-            </select>
+                {{-- FILTER BY COLOR --}}
+                <select class="form-control" name="color" id="color">
+                    <option value="">Filter by color</option>
+                    @foreach($colors as $color)
+                        <option {{ Input::get('color') == $color ? 'selected' : '' }} value="{{ $color }}">{{ $color }}</option>
+                    @endforeach
+                </select>
 
-            <button class="btn btn-info btn-sm"><i class="glyphicon glyphicon-filter"></i> Filter</button>
-        </form>
-        <div class="clearfix"></div>
-    </div>
+                <button class="btn btn-info btn-sm"><i class="glyphicon glyphicon-filter"></i> Filter</button>
+            </form>
+            <div class="clearfix"></div>
+        </div>
+    @endif
 
     <div class="row">
         {{-- List of motorbikes --}}
@@ -56,6 +58,19 @@
                 </div>
             </div>
         @endforeach
+
+        @if(! count($motorbikes) > 0)
+            <div class="">
+                <h3 class="text-center">There's not any registered motorbike, yet!</h3>
+
+                <div class="text-center">
+                    <a class="btn btn-lg btn-primary" href="{{ route('motorbike.create') }}">
+                        <i class="glyphicon glyphicon-plus-sign"></i>
+                        Add A Motorbike
+                    </a>
+                </div>
+            </div>
+        @endif
     </div>
 
     <div class="text-center">

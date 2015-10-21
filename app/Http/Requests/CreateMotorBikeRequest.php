@@ -12,7 +12,8 @@ class CreateMotorBikeRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name'  => 'required',
+            'color' => 'required',
             'price' => 'numeric'
         ];
     }
